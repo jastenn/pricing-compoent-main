@@ -1,0 +1,11 @@
+@mixin screenMedium {
+  @media (min-width: 34.375em) {
+    @content;
+  }
+}
+
+@mixin screenSmallOnly {
+  @media (max-width: 34.375em) {
+    @content;
+  }
+}
