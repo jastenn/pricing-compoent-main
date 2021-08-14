@@ -1,8 +1,8 @@
 <template>
   <label class="slider-container">
-    <span class="value">{{ pageViews }}</span>
-    <span class="price"
-      >${{ price }}
+    <span class="value">{{ selectedOption.pageViews }} Pageviews</span>
+    <span class="price" :class="{ discounted: !isMonthly }"
+      >${{ computedMonthly }}
       <span>/ month</span>
     </span>
     <input
@@ -19,12 +19,13 @@
 
 <script setup lang="ts">
 import { computed } from '@vue/reactivity';
+import { pricing } from '../types/interfaces';
 
 const props = defineProps<{
   modelValue: number;
-  price: string;
-  pageViews: string;
-  isYearly: boolean;
+  selectedOption: pricing;
+  isMonthly: boolean;
+  pricing: pricing[];
 }>();
 
 const emit = defineEmits<{
@@ -33,16 +34,21 @@ const emit = defineEmits<{
 
 const sliderConfig = {
   minValue: 0,
-  maxValue: 200,
+  maxValue: props.pricing.length,
 };
 
+const computedMonthly = computed((): number => {
+  console.log(props.isMonthly);
+  if (props.isMonthly) {
+    return props.selectedOption.price as number;
+  } else {
+    return ((props.selectedOption.price as number) / 100) * 75;
+  }
+});
+
 const backgroundSize = computed(() => {
-  return (
-    props.modelValue / 2 -
-    (sliderConfig.minValue * 100) /
-      (sliderConfig.maxValue - sliderConfig.minValue) +
-    '% 100%'
-  );
+  //ignore this I'm bad at math
+  return (100 / (sliderConfig.maxValue - 1)) * props.modelValue - 25 + '% 100%';
 });
 
 const sliderHandler = (e: Event) => {
@@ -80,9 +86,12 @@ const sliderHandler = (e: Event) => {
     display: flex;
     align-items: center;
     justify-self: center;
-
     grid-row: 3;
+    transition: color 200ms ease-out;
 
+    &.discounted {
+      color: var(--discount-text);
+    }
     @include screenMedium {
       grid-column: 2/3;
       grid-row: unset;

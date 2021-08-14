@@ -2,9 +2,9 @@
   <form class="pricing-card container" @submit="submitHandler">
     <PricingSlider
       v-model.number="pricingSlider"
-      :pageViews="pageViews"
-      :price="price"
-      :isYearly="false"
+      :selectedOption="selectedOption"
+      :isMonthly="isMonthly"
+      :pricing="pricing"
     />
     <BillingOption
       :isMonthly="isMonthly"
@@ -31,7 +31,7 @@ import BillingOption from './PricingBillingOption.vue';
 import Check from './icons/Check.vue';
 import BaseButton from './BaseButton.vue';
 
-const { isMonthly, pageViews, price, pricingSlider } = usePricing();
+const { pricing, isMonthly, selectedOption, pricingSlider } = usePricing();
 
 const billingOptionHandler = (billingOption: boolean): void => {
   isMonthly.value = billingOption;
@@ -39,13 +39,13 @@ const billingOptionHandler = (billingOption: boolean): void => {
 
 const submitHandler = (e: Event): void => {
   e.preventDefault();
-  console.log('Price: $', price.value);
-  console.log(pageViews.value);
+  console.log('Price: $', selectedOption.value.price);
+  console.log(selectedOption.value.pageViews);
   console.log('Monthly Billing: ', isMonthly.value);
 
   const formValue = {
-    price: price.value,
-    pageViews: pageViews.value,
+    price: selectedOption.value.price,
+    pageViews: selectedOption.value.pageViews,
     isMonthly: isMonthly.value,
   };
 };

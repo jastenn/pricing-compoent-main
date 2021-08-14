@@ -44,6 +44,8 @@ const props = defineProps<{
   isMonthly: boolean;
 }>();
 
+console.log(props.isMonthly);
+
 const emit = defineEmits<{
   (e: 'update:billingOption', payload: boolean): void;
 }>();
