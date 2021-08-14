@@ -1,5 +1,5 @@
 <template>
-  <div class="pricing-card container">
+  <form class="pricing-card container" @submit="submitHandler">
     <PricingSlider
       v-model.number="pricingSlider"
       :pageViews="pageViews"
@@ -18,9 +18,9 @@
           {{ salesPoint.value }}
         </p>
       </div>
-      <button class="submit-btn">Start my Trial</button>
+      <BaseButton class="primary">Start my Trial</BaseButton>
     </div>
-  </div>
+  </form>
 </template>
 
 <script setup lang="ts">
@@ -29,11 +29,25 @@ import usePricing from '../composables/usePricing';
 import PricingSlider from './PricingSlider.vue';
 import BillingOption from './PricingBillingOption.vue';
 import Check from './icons/Check.vue';
+import BaseButton from './BaseButton.vue';
 
 const { isMonthly, pageViews, price, pricingSlider } = usePricing();
 
 const billingOptionHandler = (billingOption: boolean): void => {
   isMonthly.value = billingOption;
+};
+
+const submitHandler = (e: Event): void => {
+  e.preventDefault();
+  console.log('Price: $', price.value);
+  console.log(pageViews.value);
+  console.log('Monthly Billing: ', isMonthly.value);
+
+  const formValue = {
+    price: price.value,
+    pageViews: pageViews.value,
+    isMonthly: isMonthly.value,
+  };
 };
 
 const salesPoints: { value: string; id: number }[] = [
@@ -83,20 +97,6 @@ const salesPoints: { value: string; id: number }[] = [
     > * + * {
       margin-top: 0.625em;
     }
-  }
-
-  .submit-btn {
-    display: inline-block;
-    background-color: var(--cta-background);
-    font-family: inherit;
-    font-size: 0.875rem;
-    font-weight: 800;
-    padding: 1em 2em;
-    border-radius: 5rem;
-    border: none;
-    cursor: pointer;
-
-    color: var(--cta-text);
   }
 }
 </style>

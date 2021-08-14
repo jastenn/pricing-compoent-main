@@ -143,6 +143,11 @@ const sliderHandler = (e: Event) => {
       no-repeat center;
     box-shadow: 0 0.75em 1.125rem rgba(16, 213, 193, 0.61);
     cursor: pointer;
+    transition: background-color 200ms ease-out;
+
+    &:active {
+      background-color: var(--slider-background-active);
+    }
   }
 
   .slider::-moz-range-thumb {

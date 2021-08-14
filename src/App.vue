@@ -23,6 +23,7 @@ import Pricing from './components/Pricing.vue';
 
   --cta-text: hsl(226, 100%, 87%);
   --cta-background: hsl(227, 35%, 25%);
+  --cta-text-active: hsl(0, 0%, 100%);
 
   --discount-background: hsl(14, 92%, 95%);
   --discount-text: hsl(15, 100%, 70%);
@@ -30,6 +31,7 @@ import Pricing from './components/Pricing.vue';
   --slider-bar-full: hsl(174, 77%, 80%);
   --slider-background: hsl(174, 86%, 45%);
   --slider-bar-empty: hsl(224, 65%, 95%);
+  --slider-background-active: hsl(174, 66%, 41%);
 }
 
 *,
