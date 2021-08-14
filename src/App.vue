@@ -4,6 +4,12 @@
     <p>Sign-up for our 30-day trial. No credit card required</p>
   </header>
   <Pricing />
+  <div class="attribution">
+    Challenge by
+    <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+      >Frontend Mentor</a
+    >. Coded by <a href="https://github.com/jastenn">Justine Aviso</a>.
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -88,5 +94,9 @@ body {
       font-size: clamp(0.8125rem, 2.15vw, 0.9375rem);
     }
   }
+}
+
+.attribution {
+  margin-top: 5rem;
 }
 </style>

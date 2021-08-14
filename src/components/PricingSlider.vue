@@ -118,6 +118,10 @@ const sliderHandler = (e: Event) => {
     background-size: v-bind(backgroundSize);
     cursor: pointer;
 
+    &:focus {
+      outline: none;
+      opacity: 0.75;
+    }
     @include screenMedium {
       grid-column: 1 / 3;
     }

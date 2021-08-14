@@ -61,6 +61,7 @@ const salesPoints: { value: string; id: number }[] = [
 @import '../assets/scss/mixins';
 .billing-options {
   margin-bottom: 3rem;
+  padding-top: 0.875rem;
   &::after {
     content: '';
     height: 2px;

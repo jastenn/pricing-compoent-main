@@ -8,6 +8,7 @@
         value="monthly"
         :checked="isMonthly"
         @click="typeOfBillingHandler"
+        tabindex="0"
       />
     </label>
     <div
@@ -15,6 +16,7 @@
       :class="{ active: isMonthly }"
       tabindex="0"
       @click="toggleIsMonthly"
+      @keyup="toggleIsMonthly"
     />
     <label class="yearly">
       <span>Yearly Billing</span>
@@ -24,6 +26,7 @@
         value="yearly"
         :checked="!isMonthly"
         @click="typeOfBillingHandler"
+        tabindex="0"
       />
       <p class="discount-label">
         <template v-if="isMobileView">-25%</template>
@@ -34,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import useScreenSize from '../composables/useScreenSize';
 
 const props = defineProps<{
@@ -44,10 +48,13 @@ const emit = defineEmits<{
   (e: 'update:billingOption', payload: boolean): void;
 }>();
 
+const billingToggle = ref<HTMLDivElement>();
+
 const { isMobileView } = useScreenSize();
 
 const typeOfBillingHandler = (e: Event) => {
   const element = e.target as HTMLInputElement;
+  console.log(billingToggle.value);
   if (element.value === 'yearly') {
     emit('update:billingOption', false);
   } else if ((element.value = 'monthly')) {
@@ -55,8 +62,15 @@ const typeOfBillingHandler = (e: Event) => {
   }
 };
 
-const toggleIsMonthly = () => {
-  emit('update:billingOption', !props.isMonthly);
+const toggleIsMonthly = (e: Event) => {
+  if (e.type === 'click') {
+    emit('update:billingOption', !props.isMonthly);
+  } else if (e.type === 'keyup') {
+    const key = (e as KeyboardEvent).key;
+    if (key === 'Enter' || key === ' ') {
+      emit('update:billingOption', !props.isMonthly);
+    }
+  }
 };
 </script>
 
@@ -87,8 +101,12 @@ const toggleIsMonthly = () => {
   background-color: var(--toggle-background-inactive);
   border-radius: 5rem;
   cursor: pointer;
-  transition: background-color 200ms ease-out;
+  transition: background-color, opacity 200ms ease-out;
 
+  &:focus {
+    outline: none;
+    opacity: 0.6;
+  }
   &::after {
     content: '';
     position: absolute;

@@ -29,8 +29,12 @@ const buttonHandler = () => emit('buttonClicked');
     background-color: var(--cta-background);
     transition: color 150ms ease-out;
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: var(--cta-text-active);
+    }
+    &:focus {
+      outline: none;
     }
   }
 }
